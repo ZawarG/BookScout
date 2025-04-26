@@ -4,13 +4,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <img src="{{ url_for('static', filename='image.png') }}">
+    <img src="{{ book_image }}">
     <div style="background-color:#FFF4A3;">
-        <h1>Book Name</h1>
-        <h2>Author</h2>
-        <p>This is a description of the book</p>
-        <p>Page count: </p>
-        <p>Genre: </p>
+        <h1>{{book_title}}</h1>
+        <h2>{{book_author}}</h2>
+        <p>{{book_description}}</p>
+        <p>Page count: {{book_pagecount}}</p>
+        <p>Genre: {{book_categories}}</p>
+        <p>Year: {{book_year}}</p>
     </div>
 </body>
 </html>
