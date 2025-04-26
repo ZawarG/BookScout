@@ -95,12 +95,12 @@ class Book:
         #publicationdate and categories from
         try:
             obooksapi = urlopen(oapi + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+'))  
-            book_data = json.load(obooksapi) 
-            volume_info = book_data['docs'][0]
-            categorylist = volume_info['subject']
+            book_data = json.load(obooksapi)
+            #volume_info = book_data['docs'][0]
+            #categorylist = volume_info['subject']
             print("Succesfully Accessed: ", oapi + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+'))
             try:
-                self.categories = category_picker(categorylist)
+                self.categories = 1#category_picker(categorylist)
             except:
                 self.categories = ["ERROR"]
             try:
@@ -120,5 +120,5 @@ class Book:
 
 
 #check functioning
-#a = Book('harry potter and the philosophers stone')
-#print(a.description)
+a = Book('handmaids tail')
+print(a.pubyear)
