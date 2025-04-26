@@ -1,5 +1,6 @@
 import json
 from urllib.request import urlopen
+from CategoryFinder import category_picker
 
 gapi = "https://www.googleapis.com/books/v1/volumes?q=title:"
 oapi = "https://openlibrary.org/search.json?q="
