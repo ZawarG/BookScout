@@ -3,27 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Search Page</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f5f5f5;
-            font-family: Arial, sans-serif;
-        }
-        .search-container {
-            text-align: center;
-        }
-        input[type="text"] {
-            width: 300px;
-            padding: 10px;
-            font-size: 18px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <div class="search-container">
