@@ -2,8 +2,12 @@ import json
 from urllib.request import urlopen
 #from CategoryFinder import category_picker
 
+#APIs 
 gapi = "https://www.googleapis.com/books/v1/volumes?q=title:"
-oapi = "https://openlibrary.org/search.json?q="
+oapi = "https://openlibrary.org"
+
+
+#function to parse api data to find keywords
 def category_picker(word_list):
     genres = ['Fiction', 'Fantasy', 'Horror', 'Dystopian', 'True crime', 'Romance', 
               'Comedy', 'Contemporary', 'Thrillers', 'Mystery', 'Psychological', 'Suspense', 
@@ -35,7 +39,16 @@ def category_picker(word_list):
     if 'Science Fiction' and 'Science' in outputlist:
         outputlist.remove("Science")
 
+    string = ''
+    for genre in outputlist:
+        string += ' ' + genre
+    
     return outputlist
+
+
+
+
+
 class Book:
     def __init__(self, title):
         
@@ -92,22 +105,29 @@ class Book:
                 self.cover = "ERROR"
                 print("Failed too find Bookcover from: ", "https://bookcover.longitood.com/bookcover?book_title="+ self.title.replace(" ","+") + "&author_name=" + self.author.replace(" ","+") , "and from: ""http://localhost:8000/bookcover?book_title="+ self.title.replace(" ","+") + "&author_name=" + self.author.replace(" ","+"))
 
+
         #publicationdate and categories from
         try:
-            obooksapi = urlopen(oapi + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+'))  
-            book_data = json.load(obooksapi)
-            #volume_info = book_data['docs'][0]
-            #categorylist = volume_info['subject']
-            print("Succesfully Accessed: ", oapi + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+'))
+            obooksapi = urlopen(oapi + '/search.json?q=' + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+')) 
+            general_info = json.load(obooksapi)
+            book_key = general_info['docs'][0]['key']
+
+
+            obooksapi = urlopen(oapi + f'{book_key}.json')  
+            specific_info = json.load(obooksapi)
+            categorylist = specific_info['subjects']
+
+
+            print("Succesfully Accessed: ", oapi + '/search.json?q=' + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+'))
             try:
-                self.categories = 1#category_picker(categorylist)
+                self.categories = category_picker(categorylist)
             except:
                 self.categories = ["ERROR"]
             try:
                 pubyears = []
                 for datalist in range(5):
-                    volume_info = book_data['docs'][datalist]
-                    pubyears.append(volume_info["first_publish_year"])
+                    general_info = book_data['docs'][datalist]
+                    pubyears.append(general_info["first_publish_year"])
                 self.pubyear = min(pubyears)
             except:
                 self.pubyear = "ERROR"
@@ -115,10 +135,10 @@ class Book:
         except:
             self.categories = "ERROR"
             self.pubyear = "ERROR"
-            print("Failed too access:", oapi + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+'))
+            print("Failed too access:", oapi + '/search.json?q=' + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+'))
 
 
 
 #check functioning
 a = Book('handmaids tail')
-print(a.pubyear)
+print(a.categories)

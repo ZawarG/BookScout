@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from BackendBookInfo.bookclass import Book
+from bookclass import Book
 
 
 app = Flask(__name__)
