@@ -64,7 +64,7 @@ class Book:
                 try:
                     self.title = volume_info["title"]
                     print(self.title + '------',title.split(' ')[0])
-                    if title.split(' ')[0] in self.title.lower().split(' '):
+                    if title.split(' ')[0].lower() in self.title.lower().split(' '):
                         self.author = volume_info["authors"][0]
                         print(self.title)
                         break
@@ -150,3 +150,4 @@ class Book:
             self.categories = "ERROR"
             self.pubyear = "ERROR"
             print("Failed too access:", oapi + '/search.json?q=' + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+'))
+
