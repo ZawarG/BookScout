@@ -1,7 +1,6 @@
 /* styles.css */
 
-/* homepage */
-/* Reset */
+
 *,
 *::before,
 *::after {
@@ -25,7 +24,8 @@ html, body {
     font-family: var(--fontFamily);
 }
 
-/* Search Styles */
+/* homepage */
+/* Search */
 #search {
     display: flex;
     justify-content: center;
@@ -46,6 +46,28 @@ html, body {
     outline: none;
     text-align: center;
 }
+
+
+/* about button */
+#about {
+    position: fixed;
+    bottom: 5px;
+    right: 10px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.2rem;
+  }
+  
+  #about a {
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  #about a:hover {
+    text-decoration: underline;
+    color: #000; 
+    cursor: pointer;
+  }
 
 
 /* book page */
