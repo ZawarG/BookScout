@@ -56,13 +56,24 @@ class Book:
         try:
             gbooksapi = urlopen(gapi + title.replace(" ", "%20"))
             book_data = json.load(gbooksapi)
-            volume_info = book_data["items"][0]["volumeInfo"]
             print("Succesfully Accessed: "+ gapi + title.replace(" ", "%20"))
-            try:
-                self.title = volume_info["title"]
-                self.author = volume_info["authors"][0]   
-            except:
-                self.author = "ERROR"
+
+
+            for i in range(10):
+                volume_info = book_data["items"][i]["volumeInfo"]
+                try:
+                    self.title = volume_info["title"]
+                    print(self.title + '------',title.split(' ')[0])
+                    if title.split(' ')[0] in self.title.lower().split(' '):
+                        self.author = volume_info["authors"][0]
+                        print(self.title)
+                        break
+                    else:
+                        pass
+                        print('failed')
+                except:
+                    self.author = "ERROR"
+                    self.title = "Could not find"
 
             try:    
                 self.description = volume_info["description"]
@@ -139,4 +150,3 @@ class Book:
             self.categories = "ERROR"
             self.pubyear = "ERROR"
             print("Failed too access:", oapi + '/search.json?q=' + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+'))
-
