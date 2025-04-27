@@ -126,8 +126,11 @@ class Book:
             try:
                 pubyears = []
                 for datalist in range(5):
-                    general_info = book_data['docs'][datalist]
-                    pubyears.append(general_info["first_publish_year"])
+                    try:
+                        general_info = general_info['docs'][datalist]
+                        pubyears.append(general_info["first_publish_year"])
+                    except:
+                        pass
                 self.pubyear = min(pubyears)
             except:
                 self.pubyear = "ERROR"
@@ -137,8 +140,3 @@ class Book:
             self.pubyear = "ERROR"
             print("Failed too access:", oapi + '/search.json?q=' + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+'))
 
-
-
-#check functioning
-a = Book('handmaids tail')
-print(a.categories)

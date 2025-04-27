@@ -16,8 +16,14 @@ def search():
     info = Book(user_query)
     
     # Render the 'book' page and pass query and info
-    print(info.categories)
-    return render_template('book.html', book_title = info.title, book_description = info.description, book_image = info.cover, book_author = info.author, book_pagecount = info.pagecount, book_year = info.pubyear, book_genre = str(info.categories))
+    print(info.title, info.pagecount,info.pubyear,info.categories)
+    return render_template('book.html', book_title = info.title, 
+                                        book_description = info.description, 
+                                        book_image = info.cover,
+                                        book_author = info.author,
+                                        book_pagecount = info.pagecount,
+                                        book_year = info.pubyear,
+                                        book_genre = info.categories)
 
 if __name__ == '__main__':
     app.run(debug=False)
