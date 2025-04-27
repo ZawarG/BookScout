@@ -1,4 +1,5 @@
 /* styles.css */
+/* homepage */
 body {
     display: flex;
     justify-content: center;
@@ -21,18 +22,83 @@ input[type="text"] {
     border-radius: 5px;
 }
 
-/* img {
-    width:33%;
-    height:50%;
-    float:left;
-} */
+/* book page */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
 
-/* .desc-container {
-    width: 66%;
-    float:right;
-} */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+}
 
-.grid-container {
-    display: grid;
-    grid-template-columns: 33% 66%;
+.card {
+    display: flex;
+    flex-direction: row;
+    border-radius: 8px;
+    overflow: scroll;
+}
+
+.book-image {
+    width: 40%;
+    object-fit: contain;
+}
+
+.book-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    margin: 0 0 10px;
+    color: #333;
+    font-size: 1.8em;
+}
+
+h2 {
+    margin: 0 0 20px;
+    color: #555;
+    font-size: 1.3em;
+}
+
+p {
+    color: #444;
+    line-height: 1.5;
+}
+
+p2 {
+    color: #555;
+}
+
+.details {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.details span {
+    font-size: 0.95em;
+    color: #666;
+}
+
+/* adjust for smaller screens */
+@media (max-width: 600px) {
+    .card {
+        flex-direction: column;
+    }
+
+    .book-image {
+        width: 100%;
+        height: 300px;
+        object-fit: contain;
+    }
 }

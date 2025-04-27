@@ -4,14 +4,21 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <img src="{{ book_image }}">
-    <div style="background-color:#FFF4A3;">
-        <h1>{{book_title}}</h1>
-        <h2>{{book_author}}</h2>
-        <p>{{book_description}}</p>
-        <p>Page count: {{book_pagecount}}</p>
-        <p>Genre: {{book_categories}}</p>
-        <p>Year: {{book_year}}</p>
+    <div class="container">
+        <div class="card">
+            <!-- if the image cannot be found, onerror removes it -->
+            <img class="book-image" src="{{ book_image }}" onerror="this.style.display='none';">
+            <div class="book-info">
+                <h1>{{ book_title }}</h1>
+                <h2>by {{ book_author }}</h2>
+                <p>{{ book_description }}</p>
+                <div class="details">
+                    <p2><strong>Pages:</strong> {{ book_pagecount }}</p2>
+                    <p2><strong>Genre:</strong> {{ book_categories }}</p2>
+                    <p2><strong>Year:</strong> {{ book_year }}</p2>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
