@@ -68,7 +68,7 @@ body {
     display: flex;
     flex-direction: row;
     border-radius: 8px;
-    overflow: scroll;
+    overflow: visible;
 }
 
 .book-image {
