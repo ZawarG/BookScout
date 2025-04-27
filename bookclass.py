@@ -41,9 +41,9 @@ def category_picker(word_list):
 
     string = ''
     for genre in outputlist:
-        string += ' ' + genre
+        string += genre + ' '
     
-    return outputlist
+    return string
 
 
 
