@@ -90,6 +90,20 @@ p2 {
     color: #666;
 }
 
+.back-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.back-button {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+}
+
 /* adjust for smaller screens */
 @media (max-width: 600px) {
     .card {
