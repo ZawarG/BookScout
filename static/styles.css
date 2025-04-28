@@ -55,19 +55,19 @@ html, body {
     right: 10px;
     font-family: 'Roboto Mono', monospace;
     font-size: 1.2rem;
-  }
-  
-  #about a {
+}
+
+#about a {
     color: #333;
     text-decoration: none;
     transition: all 0.3s ease;
-  }
-  
-  #about a:hover {
+}
+
+#about a:hover {
     text-decoration: underline;
     color: #000; 
     cursor: pointer;
-  }
+}
 
 
 /* book page */
@@ -92,6 +92,7 @@ body {
     max-height: 80%;
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 .book-image {
@@ -120,7 +121,7 @@ h1 {
 }
 
 h2 {
-    margin: 0 0 20px;
+    margin: 10px 0 20px;
     color: #555;
     font-size: 1.3em;
 }
@@ -167,4 +168,12 @@ p {
         height: 300px;
         object-fit: contain;
     }
+}
+
+/* about page */
+.contributor {
+    margin-left: 2%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }

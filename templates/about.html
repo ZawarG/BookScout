@@ -1,31 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>About This Project</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-  <div id="about-section">
-    <h1>About This Project</h1>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About This Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
 
-    <h2>Contributors</h2>
-    <ul>
-      <li><a href="https://github.com/username1" target="_blank">Contributor 1 GitHub</a></li>
-      <li><a href="https://github.com/username2" target="_blank">Contributor 2 GitHub</a></li>
-    </ul>
+  <body>
+    <div class = "container">
+      <!-- title -->
+      <h1>About This Project</h1>
 
-    <h2>Project Description</h2>
-    <p>
-      This is a web application that allows users to search for books by title and author. It fetches book data using the OpenLibrary API and displays detailed information about the book, including the title, author, publication year, and categories. The project is built using Flask, HTML, CSS, and JavaScript.
-    </p>
+      <!-- about the contributors -->
+      <h2>Contributors</h2>
 
-    <h2>Thank You!</h2>
-    <p>
-      Special thanks to the open-source community for providing the resources and APIs that made this project possible.
-    </p>
-  </div>
-</body>
+      <div class="card">
+        <!-- zawar -->
+        <div class="contributor">
+          <h4>Zawar Gondal</h4>
+          <a href="https://github.com/username1" target="_blank">GitHub</a>
+        </div>
+        <!-- aasees -->
+        <div class="contributor">
+          <h4>Aasees Badesha</h4>
+          <a href="https://github.com/aaseesb" target="_blank">GitHub</a>
+        </div>
+      </div>
+
+      <!-- about the project -->
+      <h2>Project Description</h2>
+      <p>
+        This is a web application that allows users to search for books by title and author. It fetches book data using the OpenLibrary API and displays detailed information about the book, including the title, author, publication year, and categories. The project is built using Flask, HTML, CSS, and JavaScript.
+      </p>
+
+      <h2>Thank You!</h2>
+      <p>
+        Special thanks to the open-source community for providing the resources and APIs that made this project possible.
+      </p>
+
+      <!-- back button -->
+      <div class="back-container">
+        <a href="/" class="back-button">⬅</a>
+      </div>
+    </div>
+  </body>
 </html>
