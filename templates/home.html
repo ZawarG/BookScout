@@ -8,6 +8,15 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+  <!-- loading screen -->
+  <div class="loading-screen">
+    <div class="hourglass">
+      <div class="top"></div>
+      <div class="bottom"></div>
+    </div>
+  </div>  
+
+  <!-- main content -->
   <div id="search">
     <form action="/search" method="get">
       <input
@@ -25,5 +34,7 @@
   <div id="about">
     <a href="{{ url_for('about') }}">About this project :O</a>
   </div>
+  <!-- javascript link -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

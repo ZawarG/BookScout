@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <div class="card">
-            <img class="book-image" src="{{ book_image }}" onerror="this.style.display='none';">
-            <!-- if the image cannot be found, onerror removes it -->
-            <div class="book-info" >
-                <h1>{{ book_title }}</h1>
-                <h2>by {{ book_author }}</h2>
-                <div class="description">
-                    <p>{{ book_description }}</p>
-                </div>
-                <div class="details">
-                    <span><strong>Pages:</strong> {{ book_pagecount }}</span>
-                    <span><strong>Genre:</strong> {{ book_genre }}</span>
-                    <span><strong>Year:</strong> {{ book_year }}</span>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+        <!-- page content -->
+        <div class="container">
+            <div class="card">
+                <img class="book-image" src="{{ book_image }}" onerror="this.style.display='none';">
+                <!-- if the image cannot be found, onerror removes it -->
+                <div class="book-info" >
+                    <h1>{{ book_title }}</h1>
+                    <h2>by {{ book_author }}</h2>
+                    <div class="description">
+                        <p>{{ book_description }}</p>
+                    </div>
+                    <div class="details">
+                        <span><strong>Pages:</strong> {{ book_pagecount }}</span>
+                        <span><strong>Genre:</strong> {{ book_genre }}</span>
+                        <span><strong>Year:</strong> {{ book_year }}</span>
+                    </div>
                 </div>
             </div>
+            <!-- back button -->
+            <div class="back-container">
+                <a href="/" class="back-button">⬅</a>
+            </div>
         </div>
-        <!-- back button -->
-        <div class="back-container">
-            <a href="/" class="back-button">⬅</a>
-        </div>
-    </div>
-</body>
+    </body>
 </html>
