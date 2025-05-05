@@ -193,3 +193,15 @@ p {
     height: 100%;
     transform: none;
 }
+
+/* book suggestions on error page */
+.book-suggestions a {
+    color: inherit;
+    text-decoration: none;
+    font-family: 'Roboto Mono', monospace;
+  }
+  
+  .book-suggestions a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }

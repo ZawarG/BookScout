@@ -1,13 +1,14 @@
 import json
 from urllib.request import urlopen
-#from CategoryFinder import category_picker
 
-#APIs 
+
+#API links
 gapi = "https://www.googleapis.com/books/v1/volumes?q=title:"
 oapi = "https://openlibrary.org"
 
 
-#function to parse api data to find keywords
+
+#parse api data to return a list of categories from keywords
 def category_picker(word_list):
     genres = ['Fiction', 'Fantasy', 'Horror', 'Dystopian', 'True crime', 'Romance', 
               'Comedy', 'Contemporary', 'Thrillers', 'Mystery', 'Psychological', 'Suspense', 
@@ -16,7 +17,9 @@ def category_picker(word_list):
               'Productivity', 'Ancient', 'Philosophy', 'Spirituality', 'Parenting', 'Political', 
                 'International Relations', 'Business', 'Short Stories', 'Science']
 
+
     processedlist = []
+    #searching for keywords in list from api (sometimes looks like 'fiction books east asia', so this searches for the word fiction)
     for genre in genres:
         for phrase in word_list:
             if genre.replace('-',' ').lower() == phrase.replace('-', ' ').lower():
@@ -27,127 +30,160 @@ def category_picker(word_list):
                     if genre.lower() == word.lower():
                         processedlist.append(genre)
                         break
-    
+        
     outputlist = []
     for genre in processedlist:
         if genre not in outputlist:
             outputlist.append(genre)
-    
+
+    #removing repetitive phrases
     if 'Fiction' and 'Non Fiction' in outputlist:
         outputlist.remove("Fiction")
     
     if 'Science Fiction' and 'Science' in outputlist:
         outputlist.remove("Science")
 
+    #returning a string for website output
     string = ''
     for genre in outputlist:
-        string += genre + ' '
-    
+        string += genre + ', '
+    string = string.rstrip(', ')
+
     return string
-
-
-
 
 
 class Book:
     def __init__(self, title):
+        self.title = title
+        self.author = ''
+        self.pubyear = ''
+        self.pagecount = ''
+        self.cover = ''
+        self.categories = ''
+        self.suggestions = []
+        self.description = ''
+
+        #googlebooks data
+        self.gbooks_data = []
+        self.gbooks_info = []
+
+        #openbooks data
+        self.obooks_info = []
+        self.obooks_data = []
+
         
-        #author, description and pagecount from googlebooks api
+    
+    #accessing google link to first check if the book exists, get a list of alternative titles if it doesnt
+    def initial_title_check(self):
         try:
-            gbooksapi = urlopen(gapi + title.replace(" ", "%20"))
-            book_data = json.load(gbooksapi)
-            print("Succesfully Accessed: "+ gapi + title.replace(" ", "%20"))
+            gbooksapi = urlopen(gapi + self.title.replace(" ", "%20"))
+            gbook_data = json.load(gbooksapi)
+            #check first 10 titles
+            for i in range(5):
+                gbooks_info = gbook_data["items"][i]["volumeInfo"]
 
-
-            for i in range(10):
-                volume_info = book_data["items"][i]["volumeInfo"]
                 try:
-                    self.title = volume_info["title"]
-                    print(self.title + '------',title.split(' ')[0])
+                    title = gbooks_info["title"]
+                    self.suggestions.append(gbooks_info["title"])
+                    
+                    
                     if title.split(' ')[0].lower() in self.title.lower().split(' '):
-                        self.author = volume_info["authors"][0]
-                        print(self.title)
+                        self.title = title
+                        self.author = gbooks_info["authors"][0]
+                        self.gbooks_data = gbook_data
+                        self.gbooks_info = gbooks_info
                         break
                     else:
-                        pass
-                        print('failed')
+                        self.title = 'ERROR'
                 except:
-                    self.author = "ERROR"
-                    self.title = "Could not find"
+                    pass
+        except:
+            self.title = 'ERROR'
 
-            try:    
-                self.description = volume_info["description"]
-            except:
-                for datalists in range(5):
+    def get_description(self):
+        try:
+            self.description = self.gbooks_info["description"]
+        #if not found than use description from other titles, usually when you search for a book all the results are the same book with different publishers
+        except:
+            try:
+                for books in range(5):
                     try:
-                        volume_info = book_data["items"][datalists]["volumeInfo"]
+                        volume_info = self.gbooks_data["items"][books]["volumeInfo"]
                         self.description = volume_info["description"]
                         break
                     except:
                         self.description = "ERROR"
                         continue
-            try:                    
-                self.pagecount = volume_info["pageCount"]
             except:
-                for datalists in range(5):
-                        try:
-                            volume_info = book_data["items"][datalists]["volumeInfo"]
-                            self.pagecount = volume_info["pageCount"]
-                            break
-                        except:
-                            self.pagecount = "ERROR"
-                            continue
-
-        except:
-            self.title = title
-            self.author = "ERROR"
-            self.pagecount = "ERROR"
-            self.description = "ERROR"
-            print("Failed too access:", gapi + title.replace(" ", "%20"))
+                self.description = 'ERROR'
     
+    def get_pagecount(self):
+        try:
+            self.pagecount = self.gbooks_info["pageCount"]
+        #if not found than use description from other titles, usually when you search for a book all the results are the same book with different publishers
+        except:
+            try:
+                for books in range(5):
+                    try:
+                        volume_info = self.gbooks_data["items"][books]["volumeInfo"]
+                        self.pagecount = volume_info["pageCount"]
+                        break
+                    except:
+                        self.pagecount = "ERROR"
+                        continue
+            except:
+                self.pagecount = 'ERROR'
+    
+    def get_cover(self):
         try:
             self.cover = json.load(urlopen("https://bookcover.longitood.com/bookcover?book_title="+ self.title.replace(" ","+") + "&author_name=" + self.author.replace(" ","+")))["url"]
-            print("Succesfully retrieved bookcover from: ", self.cover)
         except:
+            self.cover = 'ERROR'
+    
+    def get_openbooksdata(self):
             try:
-                self.cover = json.load(urlopen("http://localhost:8000/bookcover?book_title="+ self.title.replace(" ","+") + "&author_name=" + self.author.replace(" ","+")))["url"]
-                print("Succesfully retrieved bookcover from: ", self.cover, 'using localhost')
+                obooksapi = urlopen(oapi + '/search.json?q=' + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+')) 
+                self.obooks_info = json.load(obooksapi)
+                book_key = self.obooks_info['docs'][0]['key']
+
+
+                obooksapi = urlopen(oapi + f'{book_key}.json')  
+                self.obooks_data = json.load(obooksapi)
             except:
-                self.cover = "ERROR"
-                print("Failed too find Bookcover from: ", "https://bookcover.longitood.com/bookcover?book_title="+ self.title.replace(" ","+") + "&author_name=" + self.author.replace(" ","+") , "and from: ""http://localhost:8000/bookcover?book_title="+ self.title.replace(" ","+") + "&author_name=" + self.author.replace(" ","+"))
+                self.title = "ERROR"
+    
+    def get_categories(self):
+        self.categories = category_picker(self.obooks_data['subjects']) 
 
-
-        #publicationdate and categories from
-        try:
-            obooksapi = urlopen(oapi + '/search.json?q=' + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+')) 
-            general_info = json.load(obooksapi)
-            book_key = general_info['docs'][0]['key']
-
-
-            obooksapi = urlopen(oapi + f'{book_key}.json')  
-            specific_info = json.load(obooksapi)
-            categorylist = specific_info['subjects']
-
-
-            print("Succesfully Accessed: ", oapi + '/search.json?q=' + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+'))
-            try:
-                self.categories = category_picker(categorylist)
-            except:
-                self.categories = ["ERROR"]
-            try:
+    def get_pubyear(self):
+            try:    
                 pubyears = []
-                for datalist in range(5):
+                for year in range(5):
                     try:
-                        general_info = general_info['docs'][datalist]
-                        pubyears.append(general_info["first_publish_year"])
+                        info = self.obooks_info['docs'][year]
+                        pubyears.append(info["first_publish_year"])
                     except:
                         pass
                 self.pubyear = min(pubyears)
             except:
-                self.pubyear = "ERROR"
-        
-        except:
-            self.categories = "ERROR"
-            self.pubyear = "ERROR"
-            print("Failed too access:", oapi + '/search.json?q=' + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+'))
+                pass
 
+def book_import(title):
+    book = Book(title)
+    book.initial_title_check()
+    if book.title != 'ERROR':
+        print('as')
+        book.get_description()
+        book.get_pagecount()
+        book.get_cover()
+        book.get_openbooksdata()
+        book.get_pubyear()
+        book.get_categories()
+    
+    return book
+
+
+"""
+a = book_import("nineteen eighty four")
+print(a.pubyear)
+"""
