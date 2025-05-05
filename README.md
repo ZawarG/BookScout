@@ -2,6 +2,17 @@
 
 A clean and responsive web application that allows users to search for books by title. Built using Flask, HTML, CSS, and JavaScript, the app fetches data from the OpenLibrary and Google Books APIs and displays detailed information about the searched book.
 
+## Documentation
+
+1. **Clone the repository** `git clone https://github.com/ZawarG/BookScout`
+
+2. **Install dependencies** `pip install -r requirements.txt`
+
+3. **Run the application** `app.py`
+
+4. **Open your browser and visit** `http://127.0.0.1:5000`
+
+
 ## Features
 
 -  Search for books by title
