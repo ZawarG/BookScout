@@ -100,6 +100,8 @@ class Book:
         except:
             self.title = 'ERROR'
 
+
+    #getting description from googlebooks data
     def get_description(self):
         try:
             self.description = self.gbooks_info["description"]
@@ -117,10 +119,11 @@ class Book:
             except:
                 self.description = 'ERROR'
     
+    #getting pagecount also from googlebooks data
     def get_pagecount(self):
         try:
             self.pagecount = self.gbooks_info["pageCount"]
-        #if not found than use description from other titles, usually when you search for a book all the results are the same book with different publishers
+        #if not found than use pagecount from other titles, usually when you search for a book all the results are the same book with different publishers
         except:
             try:
                 for books in range(5):
@@ -134,27 +137,32 @@ class Book:
             except:
                 self.pagecount = 'ERROR'
     
+    #cover image link found from w3slleys github
     def get_cover(self):
         try:
             self.cover = json.load(urlopen("https://bookcover.longitood.com/bookcover?book_title="+ self.title.replace(" ","+") + "&author_name=" + self.author.replace(" ","+")))["url"]
         except:
             self.cover = 'ERROR'
     
+    #accessing openbooks data
     def get_openbooksdata(self):
             try:
                 obooksapi = urlopen(oapi + '/search.json?q=' + self.title.replace(" ", "+")+"&author=" + self.author.replace(' ','+')) 
                 self.obooks_info = json.load(obooksapi)
                 book_key = self.obooks_info['docs'][0]['key']
 
-
+                #openbooks changed their api to be faster by incorporating 
                 obooksapi = urlopen(oapi + f'{book_key}.json')  
                 self.obooks_data = json.load(obooksapi)
             except:
+                #if you dont find the book on openbooks its probably obscure or the websites not being accessible
                 self.title = "ERROR"
     
+    #categories from the subjects
     def get_categories(self):
         self.categories = category_picker(self.obooks_data['subjects']) 
 
+    #publication year is the smallest number from the first five results of obooks, since they are usually different 
     def get_pubyear(self):
             try:    
                 pubyears = []
@@ -168,22 +176,21 @@ class Book:
             except:
                 pass
 
+#function to call in app.py, first checks if the book exists using googlebooks api before moving forward then checking again using openbooks api.
 def book_import(title):
     book = Book(title)
     book.initial_title_check()
     if book.title != 'ERROR':
-        print('as')
         book.get_description()
         book.get_pagecount()
         book.get_cover()
         book.get_openbooksdata()
-        book.get_pubyear()
-        book.get_categories()
+        if book.title != 'ERROR':
+            book.get_pubyear()
+            book.get_categories()
     
     return book
-
-
 """
 a = book_import("nineteen eighty four")
-print(a.pubyear)
+print(a.pubyear, a.categories)
 """
