@@ -56,3 +56,5 @@ The frontend, built using Flask and standard web technologies, takes a user's se
 
 5. **Display**  
    All gathered information is rendered and displayed to the user in a clean, responsive web interface.
+   ![dfkdfmkdmf](https://github.com/user-attachments/assets/6e53b97b-2843-4ba2-96bf-4c18b17bb0d2)
+
