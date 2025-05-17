@@ -2,6 +2,8 @@
 
 A clean and responsive web application that allows users to search for books by title. Built using Flask, HTML, CSS, and JavaScript, the app fetches data from the OpenLibrary and Google Books APIs and displays detailed information about the searched book.
 
+![Responsive BookScout Website](https://github.com/user-attachments/assets/01a0651c-74e3-46ef-bdb1-792406d4158b)
+
 ## Documentation
 
 1. **Clone the repository** `git clone https://github.com/ZawarG/BookScout`
@@ -56,6 +58,5 @@ The frontend, built using Flask and standard web technologies, takes a user's se
 
 5. **Display**  
    All gathered information is rendered and displayed to the user in a clean, responsive web interface.
-   ![Responsive BookScout Website](https://github.com/user-attachments/assets/01a0651c-74e3-46ef-bdb1-792406d4158b)
 
 
